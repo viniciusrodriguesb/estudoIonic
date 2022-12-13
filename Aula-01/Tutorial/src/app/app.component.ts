@@ -8,7 +8,8 @@ export class AppComponent {
   public appPages = [
     { title: 'Home', url: 'home', icon: 'home' },
     { title: 'Navegação', url: 'navegacao', icon: 'navigate' },
-    { title: 'Botões', url: 'buttons', icon: 'medical' }
+    { title: 'Botões', url: 'buttons', icon: 'medical' },
+    { title: 'Alertas', url: 'alerta', icon: 'alert-circle' }
   ];
   public labels = ['Senac'];
   constructor() {}
