@@ -48,7 +48,4 @@ export class AlertaPage implements OnInit {
     });
     await alert.present();
   }
-
-  
-
 }
