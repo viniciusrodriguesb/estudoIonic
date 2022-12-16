@@ -41,8 +41,8 @@ export class HomePage {
     alert.present();
   }
 
-  apagar(){
-    this.tarefas.splice(1);
+  apagar(index: number){
+    this.tarefas.splice(index,1);
   }
 
   //TRIM É UTILIZADO PARA RETIRAR ESPAÇAMENTOS
