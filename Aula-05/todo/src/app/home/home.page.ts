@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -7,8 +7,15 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
-  constructor(private alertController: AlertController) {}
+  tarefas = [
+    {descricao: 'Comprar pão'},
+    {descricao: 'escovar os dentes'}
+  ] 
+  
+  constructor(private alertController: AlertController,
+              private toastController: ToastController) {}
+              
+  
   async showAdd(){
     const alert = await this.alertController.create({
         header: 'O que deseja fazer?',
@@ -26,7 +33,7 @@ export class HomePage {
           },
           {
             text: 'Adicionar',
-            handler: () => {console.log('Adicionar...')}
+            handler: (form) => {this.teste(form.task)}
           }
         ]
     }); 
@@ -34,5 +41,22 @@ export class HomePage {
     alert.present();
   }
 
-  ler(){}
+  apagar(){
+    this.tarefas.splice(1);
+  }
+
+  //TRIM É UTILIZADO PARA RETIRAR ESPAÇAMENTOS
+  async teste(newTask: string){ 
+    if(newTask.trim().length < 1){
+      const toast = await this.toastController.create({
+        message: 'Informe a tarefa!',
+        duration: 4000,
+        position: 'top'
+      });
+      toast.present();
+    }else{
+      const myArray = [];
+      this.tarefas.push({descricao: newTask})
+    }
+  }
 }
