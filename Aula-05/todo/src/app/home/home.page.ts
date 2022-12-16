@@ -45,6 +45,8 @@ export class HomePage {
     this.tarefas.splice(index,1);
   }
 
+  editar(){}
+
   //TRIM É UTILIZADO PARA RETIRAR ESPAÇAMENTOS
   async teste(newTask: string){ 
     if(newTask.trim().length < 1){
