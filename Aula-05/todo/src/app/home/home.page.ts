@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
+import { IonBackButtonDelegateDirective } from '@ionic/angular/directives/navigation/ion-back-button';
 
 @Component({
   selector: 'app-home',
@@ -7,58 +8,78 @@ import { AlertController, ToastController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  tarefas = [
-    {descricao: 'Comprar pão'},
-    {descricao: 'escovar os dentes'}
-  ] 
-  
+  tasks: any[] = [];
+
   constructor(private alertController: AlertController,
-              private toastController: ToastController) {}
-              
-  
+              private toastController: ToastController
+             ) {}
+
   async showAdd(){
     const alert = await this.alertController.create({
-        header: 'O que deseja fazer?',
-        inputs: [
-          {
-            name:'task',
-            type: 'text',
-            placeholder: 'Digite a tarefa'
-          }
-        ],
-        buttons:[
-          {
-            text: 'Cancelar',
-            handler: () => {console.log('Cancelou...')}
-          },
-          {
-            text: 'Adicionar',
-            handler: (form) => {this.teste(form.task)}
-          }
-        ]
-    }); 
+      header: 'O que deseja fazer?',
+      inputs: [
+        {
+         name: 'task',
+         type: 'text',
+         placeholder: 'Digite a tarefa'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {console.log('Cancelou...')}
+        },
+        {
+          text: 'Adicionar',
+          handler: (form) => {this.incluir(form.task)}
+        }
+      ]
+    });
 
     alert.present();
   }
 
-  apagar(index: number){
-    this.tarefas.splice(index,1);
+  apagar(task: any){
+    for(let i = 0; i < this.tasks.length; i++){
+      if(task.description == this.tasks[i].description){
+        this.tasks.splice(i, 1);
+      }
+    }
   }
 
-  editar(){}
-
-  //TRIM É UTILIZADO PARA RETIRAR ESPAÇAMENTOS
-  async teste(newTask: string){ 
+  async incluir(newTask: string){
     if(newTask.trim().length < 1){
       const toast = await this.toastController.create({
-        message: 'Informe a tarefa!',
-        duration: 4000,
+        message: 'Informe a Tarefa!!!',
+        duration: 2000,
         position: 'top'
       });
+
       toast.present();
-    }else{
-      const myArray = [];
-      this.tarefas.push({descricao: newTask})
+    } else {
+      this.tasks.push({description: newTask, done: false});
     }
+  }
+
+  alterarStatus(task: any){
+    task.done = !task.done;
+  }
+
+  arrayParaJson(){
+    let valor = [{nome: "josé"},{nome: "carlos"}];
+    let jstring = '';
+
+    jstring = '[';
+
+    for(let i = 0; i < valor.length; i++){
+      jstring = jstring + "{";
+      jstring = jstring + "nome:";
+      jstring = jstring + valor[i].nome;
+      jstring = jstring + "},";
+    }
+
+    jstring = jstring + ']';
+
+    console.log(jstring);
   }
 }
